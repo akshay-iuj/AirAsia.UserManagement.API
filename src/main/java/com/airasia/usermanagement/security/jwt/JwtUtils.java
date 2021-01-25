@@ -1,5 +1,6 @@
 package com.airasia.usermanagement.security.jwt;
 
+import com.airasia.usermanagement.models.Role;
 import com.airasia.usermanagement.security.services.UserDetailsImpl;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
@@ -9,6 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.Set;
 
 @Component
 public class JwtUtils {
@@ -20,12 +22,13 @@ public class JwtUtils {
     @Value("${airasia.app.jwtExpirationMs}")
     private int jwtExpirationMs;
 
-    public String generateJwtToken(Authentication authentication) {
+    public String generateJwtToken(Authentication authentication, String roles) {
 
         UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
 
         return Jwts.builder()
                 .setSubject((userPrincipal.getUsername()))
+                .setPayload(roles)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
