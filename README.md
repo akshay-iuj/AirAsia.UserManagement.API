@@ -29,10 +29,11 @@ airasia.app.jwtExpirationMs= 86400000
 mvn spring-boot:run
 ```
 
-##API Request Reponse Documentation
+## API Request Reponse Documentation
 
-Roles
+ Roles
 
+```
 Get Roles
 Request:
 GET /api/roles HTTP/1.1
@@ -41,9 +42,10 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJha3NoYXkiLCJpYXQiOjE2MTE1N
 
 Response:
 [{"id":1,"name":"Admin","permissions":[{"id":1,"name":"add"}]}]
+```
 
 Create Roles:
-
+```
 Request:
 POST /api/roles HTTP/1.1
 Host: localhost:5000
@@ -60,10 +62,10 @@ Response:
     "message": "Role Created Successfully",
     "unassignedPermissions": []
 }
-
+```
 
 Permissions:
-
+```
 Get Permissions
 Request:
 GET /api/permissions HTTP/1.1
@@ -76,9 +78,9 @@ Response:
         "name": "add"
     }
 ]
-
+```
 Create Permissions
-
+```
 Request:
 POST /api/permissions HTTP/1.1
 Host: localhost:5000
@@ -93,9 +95,10 @@ Response:
 {
     "message": "Permission successfully!"
 }
-
+```
 
 Login
+```
 Request:
 
 POST /api/auth/login HTTP/1.1
@@ -120,10 +123,10 @@ Response:
     "accessToken": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJha3NoYXkiLCJpYXQiOjE2MTE1NTk1ODQsImV4cCI6MTYxMTY0NTk4NH0.Zi7dRq2Kn30RijV34l6XC5QlLgEU9iVMrVRP2ssQjGI8rXhuHaC-P0hZ5VZXiKKR6Vz_aCrfXDxvPt6RPxzuCg",
     "tokenType": "Bearer"
 }
-
+```
 
 Signup
-
+```
 Request:
 POST /api/auth/signup HTTP/1.1
 Host: localhost:5000
@@ -140,9 +143,10 @@ Response:
 {
     "message": "User registered successfully!"
 }
-
+```
 
 Get Available Roles:
+```
 Request:
 
 GET /api/users/1/roles HTTP/1.1
@@ -163,9 +167,10 @@ Response:
         ]
     }
 ]
-
+```
 
 Add Roles to User
+```
 Request :
 POST /api/users/2/roles HTTP/1.1
 Host: localhost:5000
@@ -182,10 +187,10 @@ Response:
     "message": "Role Added Successfully",
     "unassignedRoles": []
 }
-
+```
 
 Get Permissions of User:
-
+```
 Request:
 GET /api/users/2/permissions HTTP/1.1
 Host: localhost:5000
@@ -208,3 +213,4 @@ Response:
         2
     ]
 }
+```
