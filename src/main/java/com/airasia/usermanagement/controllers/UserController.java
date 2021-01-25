@@ -91,7 +91,7 @@ public class UserController {
         else {
             user.setRoles(attachingRoles);
             userRepository.save(user);
-            return ResponseEntity.ok(new UserRolesResponse("Role Created Successfully", notFoundRoles));
+            return ResponseEntity.ok(new UserRolesResponse("Role Added Successfully", notFoundRoles));
         }
     }
 
