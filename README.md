@@ -1,29 +1,10 @@
 # Auth Service Task
 ## User Sign Up, User Login, Role and Permission module.
 
-## Deployed API Instance
-http://auth-service-v1.herokuapp.com
-
-## Signup Request
-```
-POST /api/auth/signup HTTP/1.1
-Host: http://auth-service-v1.herokuapp.com
-Content-Type: application/json
-Content-Length: 88
-
-{
-    "username":"aditya",
-    "password":"aditya",
-    "email":"aditya@gmail.com"
-}
-```
-
-## CI/CD Pipeline
-The deployment is tagged to Heroku on the commit in the master branch which automatically triggers and deploy the build.
-
 The diagram shows the database design of the module.
 
 ![Database Diagram](databasediagram.png)
+
 ## Dependency
  MySQL:
 ```xml
@@ -48,6 +29,27 @@ airasia.app.jwtExpirationMs= 86400000
 ```
 mvn spring-boot:run
 ```
+
+## Deployed API Instance
+http://auth-service-v1.herokuapp.com
+
+## Signup Request
+```
+POST /api/auth/signup HTTP/1.1
+Host: http://auth-service-v1.herokuapp.com
+Content-Type: application/json
+Content-Length: 88
+
+{
+    "username":"aditya",
+    "password":"aditya",
+    "email":"aditya@gmail.com"
+}
+```
+
+## CI/CD Pipeline
+The deployment is tagged to Heroku on the commit in the master branch which automatically triggers and deploy the build.
+
 
 ## API Request Reponse Documentation
 
