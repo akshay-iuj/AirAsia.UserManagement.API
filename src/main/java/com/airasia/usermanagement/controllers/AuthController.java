@@ -2,6 +2,7 @@ package com.airasia.usermanagement.controllers;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -52,18 +53,24 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-
+        Optional<User> user=userRepository.findByUsername(loginRequest.getUsername());
+        if(user.isPresent()){
+            return ResponseEntity.ok(new MessageResponse("User does not exist!"));
+        }
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
-
+                new UsernamePasswordAuthenticationToken(user.get().getUsername(), loginRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtUtils.generateJwtToken(authentication);
-
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
-
+        StringBuilder rolesString=new StringBuilder();
+        for(String role : roles)
+        {
+            rolesString.append(role);
+            rolesString.append(",");
+        }
+        String jwt = jwtUtils.generateJwtToken(authentication,rolesString.toString());
         return ResponseEntity.ok(new JwtResponse(jwt,
                 userDetails.getId(),
                 userDetails.getUsername(),
