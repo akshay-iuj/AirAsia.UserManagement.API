@@ -53,13 +53,21 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-        Optional<User> user=userRepository.findByUsername(loginRequest.getUsername());
-        if(user.isPresent()){
+        Optional<User> userByEmail=userRepository.findByEmail(loginRequest.getUsername());
+        Optional<User> userByUserName=userRepository.findByUsername(loginRequest.getUsername());
+        if(!(userByEmail.isPresent() || userByUserName.isPresent())){
             return ResponseEntity.ok(new MessageResponse("User does not exist!"));
         }
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(user.get().getUsername(), loginRequest.getPassword()));
+        Authentication authentication ;
+        if(userByEmail.isPresent())
+         authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(userByEmail.get().getUsername(), loginRequest.getPassword()));
+        else
+             authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(userByUserName.get().getUsername(), loginRequest.getPassword()));
+
         SecurityContextHolder.getContext().setAuthentication(authentication);
+
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(item -> item.getAuthority())
