@@ -45,6 +45,6 @@ public class PermissionController {
         Permission user = new Permission(permissionRequest.getName());
         permissionRepository.save(user);
 
-        return ResponseEntity.ok(new MessageResponse("Permission successfully!"));
+        return ResponseEntity.ok(new MessageResponse("Permission added successfully!"));
     }
 }
